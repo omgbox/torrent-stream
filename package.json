@@ -1,0 +1,19 @@
+{
+  "name": "streamserver",
+  "version": "1.0.0",
+  "description": "Media stream server for torrent media",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rishabh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "fastify": "^3.27.1",
+    "pump": "^3.0.0",
+    "torrent-stream": "^1.2.1",
+    "util": "^0.12.4",
+    "webtorrent": "^1.8.1"
+  }
+}
