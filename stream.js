@@ -1,5 +1,8 @@
 const pump = require('pump');
 const WebTorrent = require('webtorrent')
+var ffpmeg = require('fluent-ffmpeg');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path
+ffpmeg.setFfmpegPath(ffmpegPath)
 
 const magnetEngineMap = {};
 
@@ -10,7 +13,7 @@ class StreamClass {
         this.tracks = [[]];
         this.client.add(magnet, torrent => {
             console.log(torrent.infoHash);
-            this.tracks = torrent.files.filter((x) => x.path.includes('.mp3') || x.path.includes('.mp4')).sort(a, b => a.length - b.length);
+            this.tracks = torrent.files.filter((x) => x.path.includes('.mp3') || x.path.includes('.mp4') || x.path.includes('.mkv') || x.path.includes('.avi')).sort((a, b) => a.length - b.length);
             this.tracks.forEach((itm) => {
                 console.log(itm.path, itm.length);
             });
@@ -55,6 +58,31 @@ class StreamClass {
                 "Content-Type", "video/mp4"
             );
             const stream = this.tracks[0].createReadStream({ start, end })
+            // var command = new ffpmeg(stream)
+            //     .outputOptions(['-movflags isml+frag_keyframe'])
+            //     .toFormat('mp4')
+            //     .withAudioCodec('copy')
+            //     //.seekInput(offset) this is a problem with piping
+            //     .on('error', function (err, stdout, stderr) {
+            //         console.log('an error happened: ' + err.message);
+            //         console.log('ffmpeg stdout: ' + stdout);
+            //         console.log('ffmpeg stderr: ' + stderr);
+            //     })
+            //     .on('end', function () {
+            //         console.log('Processing finished !');
+            //     })
+            //     .on('progress', function (progress) {
+            //         console.log('Processing: ' + progress.percent + '% done');
+            //     }).output(() => {
+            //         console.log('res');
+            //     });
+            // .pipe(res, { end: true });
+            // command.format('mp4').writeToStream(res, function (retcode, error) {
+            //     console.log(error);
+            //     console.log('file has been converted succesfully');
+            // });
+            // console.log(command);
+
             return pump(stream, res);
         } else {
             res.setHeader(
