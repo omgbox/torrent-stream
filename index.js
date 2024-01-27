@@ -11,8 +11,8 @@ app.get('/get', prepStream);
 app.get('/', (req, res) => {
     res.sendStatus(200);
 })
-
-const port = process.env.PORT || 80;
+// port 3000 to proxy server
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
