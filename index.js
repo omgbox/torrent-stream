@@ -5,19 +5,19 @@ const prepStream = require('./stream');
 
 
 const app = express();
-
-app.get('/torrentStream', prepStream);
+// https://site.com/get?magnet=
+app.get('/get', prepStream);
 
 app.get('/', (req, res) => {
     res.sendStatus(200);
 })
 
-const port = process.env.PORT || 19964;
+const port = process.env.PORT || 80;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-// fastify.get('/torrentStream', prepStream);
+// fastify.get('/torrentStrea', prepStream);
 
 // const start = async () => {
 //     try {
